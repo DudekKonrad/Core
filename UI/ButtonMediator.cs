@@ -10,11 +10,11 @@ namespace Application.Core.UI
         [SerializeField] protected float _duration = 0.25f;
         [SerializeField] protected float _scale = 1.1f;
         [SerializeField] protected AudioClip _sound;
-        private Button _button;
+        protected Button Button;
 
         private void Start()
         {
-            _button = GetComponent<Button>();
+            Button = GetComponent<Button>();
         }
         public void OnPointerEnter(PointerEventData eventData)
         {

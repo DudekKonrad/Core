@@ -22,7 +22,7 @@ namespace Application.Core.UI
         }
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _signalBus.Fire(new CoreSignals.PlayUISoundSignal(AudioClipModel.UISounds.OnHover));
+            _signalBus.Fire(new CoreSignals.PlaySoundSignal(AudioClipModel.Sounds.OnButtonHover));
             gameObject.transform.DOScale(Vector3.one * _scale, _duration);
         }
         public void OnPointerExit(PointerEventData eventData)
@@ -31,7 +31,7 @@ namespace Application.Core.UI
         }
         public virtual void OnPointerClick(PointerEventData eventData)
         {
-            _signalBus.Fire(new CoreSignals.PlayUISoundSignal(AudioClipModel.UISounds.OnChoose));
+            _signalBus.Fire(new CoreSignals.PlaySoundSignal(AudioClipModel.Sounds.OnChoose));
         }
     }
 }

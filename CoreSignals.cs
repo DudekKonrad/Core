@@ -10,15 +10,27 @@ namespace Application.Core
             
         }
         
-        public class PlayUISoundSignal : ICoreSignal
+        public class PlaySoundSignal : ICoreSignal
         {
-            private AudioClipModel.UISounds _uiSounds;
-            public PlayUISoundSignal(AudioClipModel.UISounds uiSounds)
+            private AudioClipModel.Sounds _sounds;
+            private string _id;
+            public PlaySoundSignal(AudioClipModel.Sounds sounds, string id = "Sfx")
             {
-                _uiSounds = uiSounds;
+                _sounds = sounds;
+                _id = id;
             }
 
-            public AudioClipModel.UISounds UISounds => _uiSounds;
+            public AudioClipModel.Sounds Sounds => _sounds;
+            public string Id => _id;
+        }
+        public class StopSoundSignal : ICoreSignal
+        {
+            private string _id;
+            public StopSoundSignal(string id)
+            {
+                _id = id;
+            }
+            public string Id => _id;
         }
     }
 }

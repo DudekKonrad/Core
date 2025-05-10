@@ -11,7 +11,7 @@ namespace Application.Core.UI
     {
         [Inject] private SignalBus _signalBus;
 
-        [SerializeField] protected float _duration = 0.25f;
+        [SerializeField] protected float _duration = 0.15f;
         [SerializeField] protected float _scale = 1.1f;
 
         protected Button Button;

@@ -1,5 +1,4 @@
 using Application.Core.Scripts;
-using Application.GameCore;
 namespace Application.Core
 {
     public class CoreSignals

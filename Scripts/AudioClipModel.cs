@@ -11,8 +11,8 @@ namespace Application.Core.Scripts
             OnMove = 0,
             OnButtonHover = 1,
             OnChoose = 2,
-            OnReveal = 3,
-            OnMineExplode = 4,
+            OnSelect = 3,
+            OnMerge = 4,
         }
 
         public Sounds _sounds;

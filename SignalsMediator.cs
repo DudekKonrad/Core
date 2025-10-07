@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Zenject;
-
-namespace Application.GameCore
+namespace Application.Core
 {
     public static class SignalsMediator
     {

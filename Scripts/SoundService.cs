@@ -8,23 +8,35 @@ using Object = UnityEngine.Object;
 
 namespace Application.Core.Scripts
 {
-    [UsedImplicitly]
-    public class SoundService
+    public interface ISoundPlayer
     {
-        [Inject] private SignalBus _signalBus;
-        [Inject] private SoundConfig _soundConfig;
-        
+        void Play(AudioClip sfxAudioClip, AudioSource targetAudioSource = null, string id = "");
+        void Stop(string id = "");
+    }
+
+    [UsedImplicitly]
+    public class SoundService : ISoundPlayer, IInitializable, System.IDisposable
+    {
+        private readonly SignalBus _signalBus;
+        private readonly SoundConfig _soundConfig;
+
         private AudioSource _audioSourceSfx;
         private readonly Dictionary<string, AudioSource> _audioIdToSources = new Dictionary<string, AudioSource>();
         private readonly HashSet<AudioSource> _audioSources = new HashSet<AudioSource>();
 
-        [Inject]
-        public void Construct()
+        public SoundService(SignalBus signalBus, SoundConfig soundConfig)
+        {
+            _signalBus = signalBus;
+            _soundConfig = soundConfig;
+        }
+
+        public void Initialize()
         {
             _signalBus.Subscribe<CoreSignals.PlaySoundSignal>(OnPlaySoundSignal);
             _audioSourceSfx = Object.Instantiate(new GameObject()).AddComponent<AudioSource>();
             Object.DontDestroyOnLoad(_audioSourceSfx.gameObject);
         }
+
         private void OnPlaySoundSignal(CoreSignals.PlaySoundSignal signal)
         {
             Play(_soundConfig.AudioClipModels.First(_ => _._sounds == signal.Sounds).AudioClips.GetRandomElement());
@@ -32,8 +44,11 @@ namespace Application.Core.Scripts
 
         public void Dispose()
         {
+            _signalBus.TryUnsubscribe<CoreSignals.PlaySoundSignal>(OnPlaySoundSignal);
             if (_audioSourceSfx && _audioSourceSfx.gameObject)
+            {
                 Object.Destroy(_audioSourceSfx.gameObject);
+            }
         }
 
         public void Play(AudioClip sfxAudioClip, AudioSource targetAudioSource = null, string id = "")

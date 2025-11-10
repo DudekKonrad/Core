@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
+
 namespace Application.Core.UI
 {
     [RequireComponent(typeof(Button))]
-    public class ButtonMediator : MonoBehaviour, ISelectHandler, IDeselectHandler, ISubmitHandler
+    public abstract class ButtonMediator : MonoBehaviour,
+        IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [Inject] private SignalBus _signalBus;
 
@@ -15,23 +17,31 @@ namespace Application.Core.UI
         [SerializeField] protected float _scale = 1.1f;
 
         protected Button Button;
-        
-        private void Start()
+
+        private void Awake()
         {
             Button = GetComponent<Button>();
         }
 
-        public void OnSelect(BaseEventData eventData)
+        public virtual void OnPointerEnter(PointerEventData eventData)
         {
+            if (!Button.interactable) return;
+
             _signalBus.Fire(new CoreSignals.PlaySoundSignal(AudioClipModel.Sounds.OnButtonHover));
-            gameObject.transform.DOScale(Vector3.one * _scale, _duration);
+            transform.DOScale(Vector3.one * _scale, _duration);
         }
-        public void OnDeselect(BaseEventData eventData)
+
+        public virtual void OnPointerExit(PointerEventData eventData)
         {
-            gameObject.transform.DOScale(Vector3.one, _duration);
+            if (!Button.interactable) return;
+
+            transform.DOScale(Vector3.one, _duration);
         }
-        public void OnSubmit(BaseEventData eventData)
+
+        public virtual void OnPointerClick(PointerEventData eventData)
         {
+            if (!Button.interactable) return;
+
             _signalBus.Fire(new CoreSignals.PlaySoundSignal(AudioClipModel.Sounds.OnChoose));
         }
     }

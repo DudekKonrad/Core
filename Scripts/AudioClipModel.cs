@@ -13,6 +13,8 @@ namespace Application.Core.Scripts
             OnChoose = 2,
             OnSelect = 3,
             OnMerge = 4,
+            OnSpawn = 5,
+            OnDespawn = 6,
         }
 
         public Sounds _sounds;

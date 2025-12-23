@@ -8,7 +8,6 @@ namespace Application.Core.Scripts
     {
         public enum Sounds
         {
-            OnMove = 0,
             OnButtonHover = 1,
             OnChoose = 2,
             OnSelect = 3,

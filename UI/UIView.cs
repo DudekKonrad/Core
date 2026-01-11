@@ -7,15 +7,13 @@ namespace Application.Core.UI
     [RequireComponent(typeof(UIDocument))]
     public abstract class UIView : MonoBehaviour
     {
-        private UIDocument _document;
-        private VisualElement _root;
+        protected UIDocument _document;
 
         private readonly Dictionary<string, VisualElement> _elementCache = new();
 
         protected virtual void Awake()
         {
             _document = GetComponent<UIDocument>();
-            _root = _document.rootVisualElement;
         }
 
         protected virtual void OnEnable()
@@ -32,7 +30,7 @@ namespace Application.Core.UI
                 return cachedElement as T;
             }
 
-            var element = _root.Q<T>(name);
+            var element = _document.rootVisualElement.Q<T>(name);
             if (element == null)
             {
                 Debug.LogError($"[UI] Not found UI element: {name} in object: {gameObject.name}");
@@ -43,7 +41,7 @@ namespace Application.Core.UI
             return element;
         }
 
-        public virtual void Show() => _root.Show();
-        public virtual void Hide() => _root.Hide();
+        public virtual void Show() => _document.rootVisualElement.Show();
+        public virtual void Hide() => _document.rootVisualElement.Hide();
     }
 }

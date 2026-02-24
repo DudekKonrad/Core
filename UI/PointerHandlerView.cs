@@ -29,8 +29,8 @@ namespace Application.Core.UI
             _hoverTween?.Kill();
             
             var seq = DOTween.Sequence();
-            seq.Append(transform.DOScale(Vector3.one * 1.1f, 0.2f));
-            seq.Join(transform.DOShakeRotation(0.2f, 15f, 10, 90f));
+            seq.Append(transform.DOScale(Vector3.one * _uiConfig.Scale, _uiConfig.Duration));
+            seq.Join(transform.DOShakeRotation(_uiConfig.Duration, _uiConfig.ShakeStrength, _uiConfig.Vibrato, 0));
             
             _hoverTween = seq;
         }

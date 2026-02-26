@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace Application.Core.UI
 {
     [RequireComponent(typeof(Button))]
-    public abstract class ButtonMediator : PointerHandlerView
+    public abstract class ButtonMediator : UIPointerHandlerView
     {
         protected Button Button;
 

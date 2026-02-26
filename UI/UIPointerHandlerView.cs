@@ -7,7 +7,7 @@ using Zenject;
 namespace Application.Core.UI
 {
     [RequireComponent(typeof(Selectable))]
-    public class PointerHandlerView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class UIPointerHandlerView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [Inject] protected SignalBus _signalBus;
         [Inject] protected UIConfig  _uiConfig;
@@ -30,16 +30,12 @@ namespace Application.Core.UI
             
             var seq = DOTween.Sequence();
             seq.Append(transform.DOScale(Vector3.one * _uiConfig.Scale, _uiConfig.Duration));
-            seq.Join(transform.DOShakeRotation(_uiConfig.Duration, _uiConfig.ShakeStrength, _uiConfig.Vibrato, 0));
-            
             _hoverTween = seq;
         }
         public virtual void OnPointerExit(PointerEventData eventData)
         {
             if (!_selectable.interactable) return;
-
             transform.DOScale(Vector3.one, _uiConfig.Duration).SetEase(_uiConfig.Ease);
-            transform.DORotate(Vector3.one, _uiConfig.Duration).SetEase(_uiConfig.Ease);
         }
         public virtual void OnPointerClick(PointerEventData eventData)
         {

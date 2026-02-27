@@ -8,7 +8,7 @@ namespace Application.Core.UI
     {
         protected Button Button;
 
-        private void Awake()
+        private void Start()
         {
             Button = GetComponent<Button>();
             Button.onClick.AddListener(OnButtonClicked);

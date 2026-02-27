@@ -7,17 +7,17 @@ using Zenject;
 namespace Application.Core.UI
 {
     [RequireComponent(typeof(Selectable))]
-    public class UIPointerHandlerView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public abstract class UIPointerHandlerView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [Inject] protected SignalBus _signalBus;
         [Inject] protected UIConfig  _uiConfig;
         
-        private Selectable _selectable;
+        protected Selectable _selectable;
         private Tween _hoverTween;
         
-        private void Start()
+        protected virtual void Awake()
         {
-            _selectable = GetComponent<Selectable>();
+            _selectable = transform.GetComponent<Selectable>();
         }
         
         public virtual void OnPointerEnter(PointerEventData eventData)

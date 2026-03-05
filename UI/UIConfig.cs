@@ -14,6 +14,9 @@ namespace Application.Core.UI
         [SerializeField] private float _uiElementShakeStrength = 1f;
         [SerializeField] private int _uiElementShakeVibrato = 10;
         [SerializeField] private int _uiElementShakeRandomness = 5;
+
+        [Header(("Button properties"))]
+        [SerializeField] private float _buttonDuration = 0.1f;
         
         public float Duration => _uiElementScaleDuration;
         public float Scale => _uiElementScaleValue;
@@ -21,6 +24,9 @@ namespace Application.Core.UI
         public float ShakeStrength => _uiElementShakeStrength;
         public int Vibrato => _uiElementShakeVibrato;
         public int Randomness => _uiElementShakeRandomness;
+        
+        //Button
+        public float ButtonDuration => _buttonDuration;
     
     
     

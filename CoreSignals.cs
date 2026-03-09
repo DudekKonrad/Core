@@ -31,5 +31,17 @@ namespace Application.Core
             }
             public string Id => _id;
         }
+
+        public class LoadSceneSignal : ICoreSignal
+        {
+            public string SceneName { get; }
+            public bool ShowLoadingScreen { get; }
+
+            public LoadSceneSignal(string sceneName, bool showLoadingScreen = true)
+            {
+                SceneName = sceneName;
+                ShowLoadingScreen = showLoadingScreen;
+            }
+        }
     }
 }

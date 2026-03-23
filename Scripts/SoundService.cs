@@ -10,7 +10,7 @@ namespace Application.Core.Scripts
 {
     public interface ISoundPlayer
     {
-        void Play(AudioClip sfxAudioClip, AudioSource targetAudioSource = null, string id = "");
+        void Play(AudioClip sfxAudioClip, AudioSource targetAudioSource = null, string id = "", int combo = 0);
         void Stop(string id = "");
     }
 
@@ -39,7 +39,7 @@ namespace Application.Core.Scripts
 
         private void OnPlaySoundSignal(CoreSignals.PlaySoundSignal signal)
         {
-            Play(_soundConfig.AudioClipModels.First(_ => _._sounds == signal.Sounds).AudioClips.GetRandomElement());
+            Play(_soundConfig.AudioClipModels.First(_ => _._sounds == signal.Sounds).AudioClips.GetRandomElement(), null, signal.Id, signal.Combo);
         }
 
         public void Dispose()
@@ -51,7 +51,7 @@ namespace Application.Core.Scripts
             }
         }
 
-        public void Play(AudioClip sfxAudioClip, AudioSource targetAudioSource = null, string id = "")
+        public void Play(AudioClip sfxAudioClip, AudioSource targetAudioSource = null, string id = "", int combo = 0)
         {
             var audioSource = _audioSourceSfx;
 
@@ -69,6 +69,7 @@ namespace Application.Core.Scripts
                 audioSource = targetAudioSource;
             }
 
+            audioSource.pitch = 1 + combo * 0.1f;
             audioSource.PlayOneShot(sfxAudioClip);
             _audioSources.Add(audioSource);
         }

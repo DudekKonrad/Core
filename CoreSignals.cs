@@ -1,4 +1,7 @@
 using Application.Core.Scripts;
+using Application.Zoo.ProjectContext;
+using Application.Zoo.ProjectContext.Enums;
+
 namespace Application.Core
 {
     public class CoreSignals
@@ -11,16 +14,16 @@ namespace Application.Core
         
         public class PlaySoundSignal : ICoreSignal
         {
-            private AudioClipModel.Sounds _sounds;
-            private string _id;
-            public PlaySoundSignal(AudioClipModel.Sounds sounds, string id = "Sfx")
-            {
-                _sounds = sounds;
-                _id = id;
-            }
+            public AudioClipModel.Sounds Sounds { get; }
+            public string Id { get; }
+            public int Combo { get; }
 
-            public AudioClipModel.Sounds Sounds => _sounds;
-            public string Id => _id;
+            public PlaySoundSignal(AudioClipModel.Sounds sounds, string id = "Sfx", int combo = 0)
+            {
+                Sounds = sounds;
+                Id = id;
+                Combo = combo;
+            }
         }
         public class StopSoundSignal : ICoreSignal
         {

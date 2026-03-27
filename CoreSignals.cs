@@ -1,5 +1,4 @@
 using Application.Core.Scripts;
-using Application.Zoo.ProjectContext;
 using Application.Zoo.ProjectContext.Enums;
 
 namespace Application.Core

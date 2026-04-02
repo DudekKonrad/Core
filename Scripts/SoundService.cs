@@ -8,14 +8,8 @@ using Object = UnityEngine.Object;
 
 namespace Application.Core.Scripts
 {
-    public interface ISoundPlayer
-    {
-        void Play(AudioClip sfxAudioClip, AudioSource targetAudioSource = null, string id = "", int combo = 0);
-        void Stop(string id = "");
-    }
-
     [UsedImplicitly]
-    public class SoundService : ISoundPlayer, IInitializable, System.IDisposable
+    public class SoundService : IInitializable, System.IDisposable
     {
         private readonly SignalBus _signalBus;
         private readonly SoundConfig _soundConfig;

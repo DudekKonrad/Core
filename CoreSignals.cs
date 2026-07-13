@@ -33,6 +33,41 @@ namespace Application.Core
             public string Id => _id;
         }
 
+        public class PlayMusicSignal : ICoreSignal
+        {
+            public string Id { get; }
+
+            public PlayMusicSignal(string id)
+            {
+                Id = id;
+            }
+        }
+
+        public class StopMusicSignal : ICoreSignal
+        {
+            public StopMusicSignal() { }
+        }
+
+        public class SetMusicVolumeSignal : ICoreSignal
+        {
+            public float Volume { get; }
+
+            public SetMusicVolumeSignal(float volume)
+            {
+                Volume = volume;
+            }
+        }
+
+        public class SetSoundVolumeSignal : ICoreSignal
+        {
+            public float Volume { get; }
+
+            public SetSoundVolumeSignal(float volume)
+            {
+                Volume = volume;
+            }
+        }
+
         public class LoadSceneSignal : ICoreSignal
         {
             public string SceneName { get; }

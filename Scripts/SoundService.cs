@@ -27,8 +27,19 @@ namespace Application.Core.Scripts
         public void Initialize()
         {
             _signalBus.Subscribe<CoreSignals.PlaySoundSignal>(OnPlaySoundSignal);
-            _audioSourceSfx = Object.Instantiate(new GameObject()).AddComponent<AudioSource>();
+            _signalBus.Subscribe<CoreSignals.SetSoundVolumeSignal>(OnSetSoundVolumeSignal);
+            _audioSourceSfx = Object.Instantiate(new GameObject("SoundAudioSource")).AddComponent<AudioSource>();
             Object.DontDestroyOnLoad(_audioSourceSfx.gameObject);
+        }
+
+        public void Dispose()
+        {
+            _signalBus.TryUnsubscribe<CoreSignals.PlaySoundSignal>(OnPlaySoundSignal);
+            _signalBus.TryUnsubscribe<CoreSignals.SetSoundVolumeSignal>(OnSetSoundVolumeSignal);
+            if (_audioSourceSfx && _audioSourceSfx.gameObject)
+            {
+                Object.Destroy(_audioSourceSfx.gameObject);
+            }
         }
 
         private void OnPlaySoundSignal(CoreSignals.PlaySoundSignal signal)
@@ -36,13 +47,9 @@ namespace Application.Core.Scripts
             Play(_soundConfig.AudioClipModels.First(_ => _._sounds == signal.Sounds).AudioClips.GetRandomElement(), null, signal.Id, signal.Combo);
         }
 
-        public void Dispose()
+        private void OnSetSoundVolumeSignal(CoreSignals.SetSoundVolumeSignal signal)
         {
-            _signalBus.TryUnsubscribe<CoreSignals.PlaySoundSignal>(OnPlaySoundSignal);
-            if (_audioSourceSfx && _audioSourceSfx.gameObject)
-            {
-                Object.Destroy(_audioSourceSfx.gameObject);
-            }
+            SetVolume(signal.Volume);
         }
 
         public void Play(AudioClip sfxAudioClip, AudioSource targetAudioSource = null, string id = "", int combo = 0)
@@ -76,6 +83,15 @@ namespace Application.Core.Scripts
                 {
                     audioSource.Stop();
                 }
+            }
+        }
+
+        public void SetVolume(float volume)
+        {
+            _audioSourceSfx.volume = volume;
+            foreach (var source in _audioSources)
+            {
+                source.volume = volume;
             }
         }
     }

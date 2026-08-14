@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
-using DG.Tweening; // Added for DOTween functionality
+using DG.Tweening;
 
 namespace Application.Core.Scripts
 {
@@ -16,7 +16,7 @@ namespace Application.Core.Scripts
 
         private AudioSource _musicAudioSource;
         private Dictionary<string, AudioClip> _musicClips;
-        private float _defaultVolume = 0.5f; // Added default volume
+        private float _defaultVolume = 0.5f;
 
         public MusicService(SignalBus signalBus, MusicConfig musicConfig)
         {
@@ -26,14 +26,13 @@ namespace Application.Core.Scripts
 
         public void Initialize()
         {
-            Debug.Log($"Initialize MusicService");
             _signalBus.Subscribe<CoreSignals.PlayMusicSignal>(OnPlayMusicSignal);
             _signalBus.Subscribe<CoreSignals.StopMusicSignal>(OnStopMusicSignal);
             _signalBus.Subscribe<CoreSignals.SetMusicVolumeSignal>(OnSetMusicVolumeSignal);
             _musicAudioSource = Object.Instantiate(new GameObject("MusicAudioSource")).AddComponent<AudioSource>();
             Object.DontDestroyOnLoad(_musicAudioSource.gameObject);
             _musicAudioSource.loop = true; 
-            _musicAudioSource.volume = 0f; // Start with 0 volume for fade-in
+            _musicAudioSource.volume = 0f;
 
             _musicClips = _musicConfig.MusicClipModels.ToDictionary(model => model.Id, model => model.AudioClip);
             Play("MainMenuMusic");
@@ -47,7 +46,7 @@ namespace Application.Core.Scripts
 
             if (_musicAudioSource && _musicAudioSource.gameObject)
             {
-                _musicAudioSource.DOKill(); // Kill any active tweens
+                _musicAudioSource.DOKill();
                 Object.Destroy(_musicAudioSource.gameObject);
             }
         }
@@ -78,13 +77,13 @@ namespace Application.Core.Scripts
                 {
                     if (_musicAudioSource.isPlaying)
                     {
-                        _musicAudioSource.DOKill(); // Kill current fade out/in if any
-                        _musicAudioSource.DOFade(0f, 0.5f).OnComplete(() => // Fade out current music
+                        _musicAudioSource.DOKill();
+                        _musicAudioSource.DOFade(0f, 0.5f).OnComplete(() =>
                         {
                             _musicAudioSource.clip = clip;
                             _musicAudioSource.loop = musicClipModel.Loop;
                             _musicAudioSource.Play();
-                            _musicAudioSource.DOFade(_defaultVolume, 1f); // Fade in new music
+                            _musicAudioSource.DOFade(_defaultVolume, 1f);
                         });
                     }
                     else
@@ -92,7 +91,7 @@ namespace Application.Core.Scripts
                         _musicAudioSource.clip = clip;
                         _musicAudioSource.loop = musicClipModel.Loop;
                         _musicAudioSource.Play();
-                        _musicAudioSource.DOFade(_defaultVolume, 1f); // Fade in new music
+                        _musicAudioSource.DOFade(_defaultVolume, 1f);
                     }
                 }
             }
@@ -104,14 +103,14 @@ namespace Application.Core.Scripts
 
         public void Stop()
         {
-            _musicAudioSource.DOKill(); // Kill any active tweens
+            _musicAudioSource.DOKill();
             _musicAudioSource.DOFade(0f, 1f).OnComplete(() => _musicAudioSource.Stop()); // Fade out and then stop
         }
 
         public void SetVolume(float volume)
         {
-            _defaultVolume = volume; // Update default volume
-            _musicAudioSource.DOFade(volume, 0.5f); // Smoothly change volume
+            _defaultVolume = volume;
+            _musicAudioSource.DOFade(volume, 0.5f);
         }
     }
 }

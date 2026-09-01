@@ -13,6 +13,9 @@ namespace Application.Core.UI
     {
         [Inject] protected SignalBus _signalBus;
         [Inject] protected UIConfig  _uiConfig;
+
+        [SerializeField]
+        private Transform _imageTransform;
         
         protected Selectable _selectable;
         protected Shadow _shadow;
@@ -36,7 +39,7 @@ namespace Application.Core.UI
             _signalBus.Fire(new CoreSignals.PlaySoundSignal(AudioClipModel.Sounds.OnButtonHover));
             
             _hoverTween?.Kill();
-            _hoverTween = transform.DOScale(Vector3.one * _uiConfig.Scale, _uiConfig.Duration).SetEase(_uiConfig.Ease);
+            _hoverTween = _imageTransform.transform.DOScale(Vector3.one * _uiConfig.Scale, _uiConfig.Duration).SetEase(_uiConfig.Ease);
         }
 
         public virtual void OnPointerExit(PointerEventData eventData)
@@ -44,7 +47,7 @@ namespace Application.Core.UI
             if (!_selectable.interactable) return;
             
             _hoverTween?.Kill();
-            _hoverTween = transform.DOScale(Vector3.one, _uiConfig.Duration).SetEase(_uiConfig.Ease);
+            _hoverTween = _imageTransform.transform.DOScale(Vector3.one, _uiConfig.Duration).SetEase(_uiConfig.Ease);
         }
 
         public virtual void OnPointerClick(PointerEventData eventData)
@@ -61,7 +64,7 @@ namespace Application.Core.UI
             _clickTween?.Kill();
             _shadowTween?.Kill();
 
-            _clickTween = transform.DOScale(Vector3.one * 0.9f, 0.1f).SetEase(Ease.OutQuad);
+            _clickTween = _imageTransform.transform.DOScale(Vector3.one * 0.9f, 0.1f).SetEase(Ease.OutQuad);
             _shadowTween = DOTween.To(() => _shadow.effectDistance, x => _shadow.effectDistance = x, Vector2.zero, _uiConfig.ButtonDuration)
                 .SetEase(Ease.OutQuad);
         }
@@ -74,7 +77,7 @@ namespace Application.Core.UI
             _shadowTween?.Kill();
 
             float targetScale = eventData.pointerEnter == gameObject ? _uiConfig.Scale : 1f;
-            _clickTween = transform.DOScale(Vector3.one * targetScale, _uiConfig.ButtonDuration).SetEase(Ease.OutBack);
+            _clickTween = _imageTransform.transform.DOScale(Vector3.one * targetScale, _uiConfig.ButtonDuration).SetEase(Ease.OutBack);
             _shadowTween = DOTween.To(() => _shadow.effectDistance, x => _shadow.effectDistance = x, _originalShadowDistance, _uiConfig.ButtonDuration)
                 .SetEase(Ease.OutBack);
         }

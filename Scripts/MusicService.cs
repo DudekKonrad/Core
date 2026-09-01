@@ -16,7 +16,7 @@ namespace Application.Core.Scripts
 
         private AudioSource _musicAudioSource;
         private Dictionary<string, AudioClip> _musicClips;
-        private float _defaultVolume = 0.5f;
+        private float _defaultVolume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
 
         public MusicService(SignalBus signalBus, MusicConfig musicConfig)
         {
@@ -68,7 +68,6 @@ namespace Application.Core.Scripts
 
         private void Play(string id)
         {
-            Debug.Log($"Play music: {id}");
             if (_musicClips.TryGetValue(id, out var clip))
             {
                 var musicClipModel = _musicConfig.MusicClipModels.FirstOrDefault(model => model.Id == id);
@@ -110,7 +109,7 @@ namespace Application.Core.Scripts
         public void SetVolume(float volume)
         {
             _defaultVolume = volume;
-            _musicAudioSource.DOFade(volume, 0.5f);
+            _musicAudioSource.volume = volume;
         }
     }
 }

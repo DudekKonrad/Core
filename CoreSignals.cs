@@ -1,4 +1,5 @@
 using Application.Core.Scripts;
+using AudioClipModel = Application.Core.Enums.AudioClipModel;
 
 namespace Application.Core
 {
@@ -12,13 +13,13 @@ namespace Application.Core
         
         public class PlaySoundSignal : ICoreSignal
         {
-            public AudioClipModel.Sounds Sounds { get; }
+            public AudioClipModel.Sounds Sound { get; }
             public string Id { get; }
             public int Combo { get; }
 
-            public PlaySoundSignal(AudioClipModel.Sounds sounds, string id = "Sfx", int combo = 0)
+            public PlaySoundSignal(AudioClipModel.Sounds sound, string id = "Sfx", int combo = 0)
             {
-                Sounds = sounds;
+                Sound = sound;
                 Id = id;
                 Combo = combo;
             }

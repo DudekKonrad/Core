@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
+using AudioClipModel = Application.Core.Enums.AudioClipModel;
 
 namespace Application.Core.UI
 {

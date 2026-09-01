@@ -1,12 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
-using Application.Utils.Collections;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
 
-namespace Application.Core.Scripts
+namespace Application.Core.Scripts.Audio
 {
     [UsedImplicitly]
     public class SoundService : IInitializable, System.IDisposable
@@ -44,7 +42,7 @@ namespace Application.Core.Scripts
 
         private void OnPlaySoundSignal(CoreSignals.PlaySoundSignal signal)
         {
-            Play(_soundConfig.AudioClipModels.First(_ => _._sounds == signal.Sounds).AudioClips.GetRandomElement(), null, signal.Id, signal.Combo);
+            Play(_soundConfig.Sounds[signal.Sound], null, signal.Id, signal.Combo);
         }
 
         private void OnSetSoundVolumeSignal(CoreSignals.SetSoundVolumeSignal signal)

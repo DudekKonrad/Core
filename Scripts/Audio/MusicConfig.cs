@@ -1,6 +1,5 @@
 using UnityEngine;
-
-namespace Application.Core.Scripts
+namespace Application.Core.Scripts.Audio
 {
     [CreateAssetMenu(menuName = "Core/Create MusicConfig", fileName = "MusicConfig", order = 0)]
     public class MusicConfig : ScriptableObject

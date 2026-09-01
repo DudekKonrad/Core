@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
-using DG.Tweening;
 
-namespace Application.Core.Scripts
+namespace Application.Core.Scripts.Audio
 {
     [UsedImplicitly]
     public class MusicService : IInitializable, System.IDisposable

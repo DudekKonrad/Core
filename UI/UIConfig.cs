@@ -15,8 +15,15 @@ namespace Application.Core.UI
         [SerializeField] private int _uiElementShakeVibrato = 10;
         [SerializeField] private int _uiElementShakeRandomness = 5;
 
-        [Header(("Button properties"))]
-        [SerializeField] private float _buttonDuration = 0.1f;
+        [Header("Pointer animation")]
+        [SerializeField] private float _hoverScale = 1.06f;
+        [SerializeField] private float _hoverDuration = 0.18f;
+        [SerializeField] private Ease _hoverEase = Ease.OutBack;
+        [SerializeField] private Ease _exitEase = Ease.OutQuad;
+        [SerializeField] private float _pressedScale = 0.96f;
+        [SerializeField] private float _pressedDuration = 0.08f;
+        [SerializeField] private Vector2 _hoverShadowDistance = new Vector2(2f, -2f);
+        [SerializeField] private float _shadowDuration = 0.14f;
         
         public float Duration => _uiElementScaleDuration;
         public float Scale => _uiElementScaleValue;
@@ -25,10 +32,13 @@ namespace Application.Core.UI
         public int Vibrato => _uiElementShakeVibrato;
         public int Randomness => _uiElementShakeRandomness;
         
-        //Button
-        public float ButtonDuration => _buttonDuration;
-    
-    
-    
+        public float HoverScale => _hoverScale;
+        public float HoverDuration => _hoverDuration;
+        public Ease HoverEase => _hoverEase;
+        public Ease ExitEase => _exitEase;
+        public float PressedScale => _pressedScale;
+        public float PressedDuration => _pressedDuration;
+        public Vector2 HoverShadowDistance => _hoverShadowDistance;
+        public float ShadowDuration => _shadowDuration;
     }
 }

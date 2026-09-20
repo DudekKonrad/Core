@@ -1,4 +1,3 @@
-using Application.Core.Scripts;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;

@@ -76,14 +76,11 @@ namespace Application.Core.Scripts
             _processingBackground.raycastTarget = true;
             _processingGearIcon.raycastTarget = false;
 
-            // Reset Gear
             _processingGearIcon.transform.localScale = Vector3.zero;
             _processingGearIcon.transform.localRotation = Quaternion.identity;
 
-            // Setup Background initial state for Enter
             SetupEnterBackgroundState();
 
-            // Create Sequence for Background Enter Animation
             Sequence bgSequence = DOTween.Sequence();
 
             if (_enterType == TransitionType.FadeOnly || _enterType == TransitionType.FadeAndSlide)
@@ -98,7 +95,6 @@ namespace Application.Core.Scripts
 
             _processingBackgroundTween = bgSequence;
 
-            // Gear Tweens
             _processingGearScaleTween = _processingGearIcon.transform
                 .DOScale(Vector3.one, _processingGearScaleDuration)
                 .SetEase(Ease.OutBack);

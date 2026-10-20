@@ -10,7 +10,8 @@ namespace Application.Core.Scripts
         [SerializeField] private Sprite[] _imagePool;
 
         [SerializeField] private Vector2 _idlePositionPunch = new Vector2(10f, 10f);
-        [SerializeField] private float _idleDuration = 3f;
+        [SerializeField] private float _minIdleDuration = 2f;
+        [SerializeField] private float _maxIdleDuration = 4f;
         [SerializeField] private float _idleMaxRotation = 3f;
         [SerializeField] private Ease _idleEase = Ease.InOutSine;
 
@@ -21,7 +22,7 @@ namespace Application.Core.Scripts
 
         private void InitializeItems()
         {
-            List<Sprite> availableSprites = new List<Sprite>();
+            var availableSprites = new List<Sprite>();
             if (_imagePool != null && _imagePool.Length > 0)
             {
                 availableSprites = new List<Sprite>(_imagePool);
@@ -58,15 +59,25 @@ namespace Application.Core.Scripts
             float randomX = Random.Range(-_idlePositionPunch.x, _idlePositionPunch.x);
             float randomY = Random.Range(-_idlePositionPunch.y, _idlePositionPunch.y);
             float randomRot = Random.Range(-_idleMaxRotation, _idleMaxRotation);
+            float randomDuration = Random.Range(_minIdleDuration, _maxIdleDuration);
 
-            var targetPos = item.originalAnchoredPosition + new Vector2(randomX, randomY);
-            var targetRot = Quaternion.Euler(0, 0, randomRot);
+            Vector2 punchOffset = new Vector2(randomX, randomY);
+
+            Vector2 targetPos1 = item.originalAnchoredPosition + punchOffset;
+            Vector2 targetPos2 = item.originalAnchoredPosition - punchOffset;
+
+            Quaternion targetRot1 = Quaternion.Euler(0, 0, randomRot);
+            Quaternion targetRot2 = Quaternion.Euler(0, 0, -randomRot);
 
             item.idleTween = DOTween.Sequence()
-                .Append(item.rectTransform.DOAnchorPos(targetPos, _idleDuration).SetEase(_idleEase))
-                .Join(item.rectTransform.DORotateQuaternion(targetRot, _idleDuration).SetEase(_idleEase))
+                .Append(item.rectTransform.DOAnchorPos(targetPos1, randomDuration).SetEase(_idleEase))
+                .Join(item.rectTransform.DORotateQuaternion(targetRot1, randomDuration).SetEase(_idleEase))
+                .Append(item.rectTransform.DOAnchorPos(targetPos2, randomDuration).SetEase(_idleEase))
+                .Join(item.rectTransform.DORotateQuaternion(targetRot2, randomDuration).SetEase(_idleEase))
                 .SetLoops(-1, LoopType.Yoyo)
                 .SetUpdate(true);
+
+            item.idleTween.Goto(Random.Range(0f, randomDuration * 2f), true);
         }
 
         private void OnDestroy()

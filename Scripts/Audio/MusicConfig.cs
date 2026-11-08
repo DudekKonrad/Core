@@ -5,8 +5,10 @@ namespace Application.Core.Scripts.Audio
     public class MusicConfig : ScriptableObject
     {
         [SerializeField] private MusicClipModel[] _musicClipModels = {};
+        [SerializeField] private float _fadeDuration;
 
         public MusicClipModel[] MusicClipModels => _musicClipModels;
+        public float FadeDuration => _fadeDuration;
     }
 
     [System.Serializable]

@@ -8,7 +8,8 @@ namespace Application.Core.Enums
             OnChoose = 2,
             OnSelect = 3,
             OnMerge = 4,
-            Pitch = 5
+            Pitch = 5,
+            Confetti = 6
         }
     }
 }

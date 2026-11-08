@@ -13,6 +13,7 @@ namespace Application.Core.Scripts.Audio
         private readonly SoundConfig _soundConfig;
 
         private AudioSource _audioSourceSfx;
+        private float _volume = PlayerPrefs.GetFloat("SoundVolume", 0.5f);
         private readonly Dictionary<string, AudioSource> _audioIdToSources = new Dictionary<string, AudioSource>();
         private readonly HashSet<AudioSource> _audioSources = new HashSet<AudioSource>();
 
@@ -27,6 +28,7 @@ namespace Application.Core.Scripts.Audio
             _signalBus.Subscribe<CoreSignals.PlaySoundSignal>(OnPlaySoundSignal);
             _signalBus.Subscribe<CoreSignals.SetSoundVolumeSignal>(OnSetSoundVolumeSignal);
             _audioSourceSfx = Object.Instantiate(new GameObject("SoundAudioSource")).AddComponent<AudioSource>();
+            _audioSourceSfx.volume = _volume;
             Object.DontDestroyOnLoad(_audioSourceSfx.gameObject);
         }
 
@@ -60,6 +62,7 @@ namespace Application.Core.Scripts.Audio
                 {
                     audioSource = _audioSourceSfx.gameObject.AddComponent<AudioSource>();
                     audioSource.loop = false;
+                    audioSource.volume = _volume;
                     _audioIdToSources.Add(id, audioSource);
                 }
             }
@@ -68,6 +71,7 @@ namespace Application.Core.Scripts.Audio
                 audioSource = targetAudioSource;
             }
 
+            audioSource.volume = _volume;
             audioSource.pitch = 1 + combo * 0.1f;
             audioSource.PlayOneShot(sfxAudioClip);
             _audioSources.Add(audioSource);
@@ -86,6 +90,7 @@ namespace Application.Core.Scripts.Audio
 
         public void SetVolume(float volume)
         {
+            _volume = volume;
             _audioSourceSfx.volume = volume;
             foreach (var source in _audioSources)
             {

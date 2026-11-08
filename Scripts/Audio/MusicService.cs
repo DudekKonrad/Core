@@ -34,6 +34,7 @@ namespace Application.Core.Scripts.Audio
             _musicAudioSource.loop = true; 
             _musicAudioSource.volume = 0f;
             _musicClips = _musicConfig.MusicClipModels.ToDictionary(model => model.Id, model => model.AudioClip);
+            Play("MainMenuMusic");
         }
 
         public void Dispose()

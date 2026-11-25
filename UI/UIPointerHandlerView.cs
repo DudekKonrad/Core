@@ -17,7 +17,6 @@ namespace Application.Core.UI
         protected Selectable _selectable;
         protected Shadow _shadow;
         [SerializeField]
-        [Tooltip("Visual element animated on pointer interactions. Supports Image, TMP_Text, and other Graphic components.")]
         private Graphic _visual;
         [SerializeField] private bool _animateColor;
         [SerializeField] private Color _hoverColor = Color.white;
@@ -32,14 +31,6 @@ namespace Application.Core.UI
         {
             _selectable = GetComponent<Selectable>();
             _shadow = GetComponent<Shadow>();
-
-            if (_visual == null)
-            {
-                Debug.LogError(
-                    $"{nameof(UIPointerHandlerView)} requires a visual Graphic reference.",
-                    this);
-                return;
-            }
 
             _originalScale = _visual.transform.localScale;
             _originalColor = _visual.color;

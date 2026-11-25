@@ -12,7 +12,9 @@ namespace Application.Core.Scripts.Audio
     [UsedImplicitly]
     public class MusicService : IInitializable, System.IDisposable
     {
-        private const string MainMenuMusicId = "MaiMenuMusic";
+        private const string MainMenuSceneName = "MainMenu";
+        private const string GameplaySceneName = "Gameplay";
+        private const string MainMenuMusicId = "MainMenuMusic";
         private const string GameplayMusicId = "GameplayScene";
 
         private readonly SignalBus _signalBus;
@@ -35,7 +37,6 @@ namespace Application.Core.Scripts.Audio
         public void Initialize()
         {
             _signalBus.Subscribe<CoreSignals.PlayMusicSignal>(OnPlayMusicSignal);
-            _signalBus.Subscribe<CoreSignals.StopMusicSignal>(OnStopMusicSignal);
             _signalBus.Subscribe<CoreSignals.LoadSceneSignal>(OnLoadSceneSignal);
             _signalBus.Subscribe<CoreSignals.SetMusicVolumeSignal>(OnSetMusicVolumeSignal);
             _musicAudioSource = Object.Instantiate(new GameObject("MusicAudioSource")).AddComponent<AudioSource>();
@@ -45,13 +46,13 @@ namespace Application.Core.Scripts.Audio
             _musicClips = _musicConfig.MusicClipModels.ToDictionary(model => model.Id, model => model.AudioClip);
 
             SceneManager.sceneLoaded += OnSceneLoaded;
+
             PlayMusicForScene(SceneManager.GetActiveScene());
         }
 
         public void Dispose()
         {
             _signalBus.TryUnsubscribe<CoreSignals.PlayMusicSignal>(OnPlayMusicSignal);
-            _signalBus.TryUnsubscribe<CoreSignals.StopMusicSignal>(OnStopMusicSignal);
             _signalBus.TryUnsubscribe<CoreSignals.LoadSceneSignal>(OnLoadSceneSignal);
             _signalBus.TryUnsubscribe<CoreSignals.SetMusicVolumeSignal>(OnSetMusicVolumeSignal);
             SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -77,18 +78,13 @@ namespace Application.Core.Scripts.Audio
         {
             switch (scene.name)
             {
-                case "MainMenu":
+                case MainMenuSceneName:
                     Play(MainMenuMusicId);
                     break;
-                case "Gameplay":
+                case GameplaySceneName:
                     Play(GameplayMusicId);
                     break;
             }
-        }
-
-        private void OnStopMusicSignal()
-        {
-            Stop();
         }
 
         private void OnLoadSceneSignal(CoreSignals.LoadSceneSignal signal)

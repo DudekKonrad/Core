@@ -12,7 +12,5 @@ namespace Application.Core.Scripts
 
         [HideInInspector] public Vector2 originalAnchoredPosition;
         [HideInInspector] public Tween idleTween;
-        [HideInInspector] public bool isSwapping = false;
-        [HideInInspector] public Vector3 _currentScale = Vector3.one;
     }
 }

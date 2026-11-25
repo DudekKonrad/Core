@@ -33,7 +33,6 @@ namespace Application.Core.Scripts
                 if (item == null || item.rectTransform == null) continue;
 
                 item.originalAnchoredPosition = item.rectTransform.anchoredPosition;
-                item._currentScale = item.rectTransform.localScale;
 
                 if (item.targetImage != null && availableSprites.Count > 0)
                 {

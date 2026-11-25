@@ -25,13 +25,6 @@ namespace Application.Core.UI
         [SerializeField] private Vector2 _hoverShadowDistance = new Vector2(2f, -2f);
         [SerializeField] private float _shadowDuration = 0.14f;
         
-        public float Duration => _uiElementScaleDuration;
-        public float Scale => _uiElementScaleValue;
-        public Ease Ease => _uiElementScaleEase;
-        public float ShakeStrength => _uiElementShakeStrength;
-        public int Vibrato => _uiElementShakeVibrato;
-        public int Randomness => _uiElementShakeRandomness;
-        
         public float HoverScale => _hoverScale;
         public float HoverDuration => _hoverDuration;
         public Ease HoverEase => _hoverEase;

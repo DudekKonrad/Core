@@ -1,6 +1,6 @@
 namespace Application.Core.Enums
 {
-    public partial class AudioClipModel
+    public class AudioClipModel
     {
         public enum Sounds
         {

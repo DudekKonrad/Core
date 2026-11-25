@@ -3,11 +3,6 @@ using UnityEngine;
 
 namespace Application.Core.Editor
 {
-    /// <summary>
-    /// Editor window to find and select assets by GUID.
-    /// Keyboard shortcut: Alt+G
-    /// Menu: Tools > Find Asset by GUID
-    /// </summary>
     public class FindAssetByGuidWindow : EditorWindow
     {
         private string _guidInput = "";
@@ -27,13 +22,11 @@ namespace Application.Core.Editor
             GUILayout.Label("Find Asset by GUID", EditorStyles.boldLabel);
             GUILayout.Space(10);
 
-            // GUID input field
             GUILayout.Label("Enter or paste GUID:", EditorStyles.label);
             _guidInput = EditorGUILayout.TextField(_guidInput, GUILayout.Height(30));
 
             GUILayout.Space(10);
 
-            // Search button
             using (new EditorGUILayout.HorizontalScope())
             {
                 if (GUILayout.Button("Find Asset", GUILayout.Height(35)))
@@ -51,13 +44,11 @@ namespace Application.Core.Editor
 
             GUILayout.Space(15);
 
-            // Status message
             if (!string.IsNullOrEmpty(_statusMessage))
             {
                 EditorGUILayout.HelpBox(_statusMessage, _messageType);
             }
 
-            // Show found asset
             if (_foundAsset != null)
             {
                 GUILayout.Space(10);

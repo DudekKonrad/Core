@@ -43,11 +43,6 @@ namespace Application.Core
             }
         }
 
-        public class StopMusicSignal : ICoreSignal
-        {
-            public StopMusicSignal() { }
-        }
-
         public class SetMusicVolumeSignal : ICoreSignal
         {
             public float Volume { get; }
